@@ -16,3 +16,15 @@ test('check that we get employee name', () =>{
 
     expect(employee.getName()).toEqual(expect.stringContaining(employee.name.toString()));
 });
+
+test('check that we get an employee id', () =>{
+    const employee = new Employee("Mike", 7, "mike@gmail.com");
+
+    expect(employee.getId()).toEqual(expect.stringContaining(employee.id.toString()));
+});
+
+test('check that we get employee role', () =>{
+    const employee = new Employee("Mike", 7, "mike@gmail.com");
+
+    expect(employee.getRole()).toBe('Employee');
+});
