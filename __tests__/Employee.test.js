@@ -10,3 +10,9 @@ test('check that employee object was created', () =>{
     expect(employee.email).toStrictEqual(expect.any(String));
 
 });
+
+test('check that we get employee name', () =>{
+    const employee = new Employee("Mike", 7, "mike@gmail.com");
+
+    expect(employee.getName()).toEqual(expect.stringContaining(employee.name.toString()));
+});
