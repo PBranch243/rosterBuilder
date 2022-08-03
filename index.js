@@ -1,6 +1,10 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
-
+const Manager = require("./lib/Manager");
+const Engineer = require("./lib/Engineer");
+const Intern = require("./lib/Intern");
+//empty array to hold employee info
+const employeeArray = [];
 //question arrays
 
 const questionManager = [
@@ -89,58 +93,57 @@ const questionIntern = [
         choices: ['1)Add an Engineer', '2)Add an Intern', '3)Finish My Team'],
     }
 ];
+var writePage = ()=>{
+    console.log(employeeArray);
+}
 
+var whatNow = (choice) => {
+    //var choice = answers.whatNow.charAt(0);
+    //write function to return html content
+    if (choice === '1') {
+        promptEngineer();
+        //choice = answers.whatNow.charAt(0);remove/unneccessary
+    }
+    else if (choice === '2') {
+        promptIntern();
+        //choice = answers.whatNow.charAt(0);
+    } else {
+        writePage();
+    }
+}
 var promptIntern = () => {
     inquirer.prompt(questionIntern)
         .then((answers) => {
-            var choice = answers.whatNow.charAt(0);
-            //write function to return html content
-            if (choice = 1) {
-                promptEngineer();
-                choice = answers.whatNow.charAt(0);
-            }
-                else if(choice = 2){
-                    promptIntern();
-                    choice = answers.whatNow.charAt(0);
-                }else {
-                    writePage();
-                }
+            //what to do with the answeres here
+            var intern = new Intern(answers.name, answers.id, answers.email, answers.school);
+            employeeArray.push(intern);
+            whatNow(answers.whatNow.charAt(0));
+
         })
 }
 
 var promptEngineer = () => {
     inquirer.prompt(questionEngineer)
         .then((answers) => {
-            var choice = answers.whatNow.charAt(0);
-            //write function to return html content
-            if (choice = 1) {
-                promptEngineer();
-                choice = answers.whatNow.charAt(0);
-            }
-                else if(choice = 2){
-                    promptIntern();
-                    choice = answers.whatNow.charAt(0);
-                }else {
-                    writePage();
-                }
+            //what to do with the answeres here
+            var engineer = new Engineer(answers.name, answers.id, answers.email, answers.github);
+            employeeArray.push(engineer);
+
+            whatNow(answers.whatNow.charAt(0));
         })
 }
 
 var promptManager = () => {
     inquirer.prompt(questionManager)
         .then((answers) => {
-            var choice = answers.whatNow.charAt(0);
-            //write function to return html content
-            console.log(choice);
-            if (choice = 1) {
-                promptEngineer();
-                choice = answers.whatNow.charAt(0);
-            }
-                else if(choice = 2){
-                    promptIntern();
-                }else {
-                    writePage();
-                }
+            //what to do with the answeres here
+            //use answer to create and instance of MGR
+            //store in array
+            var manager = new Manager(answers.name, answers.id, answers.email, answers.officeNumber);
+            //now that you have an instance, store in array for later use
+            employeeArray.push(manager);
+
+            whatNow(answers.whatNow.charAt(0));
         })
 };
 promptManager();
